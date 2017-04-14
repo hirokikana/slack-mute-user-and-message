@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "Slack Mute User and Message",
+    "short_name": "Slack Mute",
+    "description": "",
+    "version" : "0.1.1",
+    "options_page": "src/html/option.html",
+    "background": {
+        "scripts": ["src/js/localstorage.js"]
+    },
+    "content_scripts": [
+        {
+            "matches" : [ "https://*.slack.com/*"],
+            "js": ["src/js/jquery-3.2.1.min.js", "src/js/script.js"],
+            "run_at" : "document_idle"
+        }
+    ]
+}
