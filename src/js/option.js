@@ -14,7 +14,7 @@ function save_list() {
     localStorage.setItem("mute_user_list", $('#mute_user_list').val());
     localStorage.setItem("mute_word_list", $('#mute_word_list').val());
 
-    $('#message').text('Saved');
+    $('#message').text('保存しました');
     $('#message').show();
     setTimeout(function() {$('#message').fadeOut("slow");}, 1000);
 }
