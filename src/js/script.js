@@ -46,10 +46,14 @@ function hide_user(target_user) {
 
 function find_user_id(target_user) {
     var user_id;
+    if (localStorage.getItem(target_user)) {
+        return localStorage.getItem(target_user);
+    }
     $('.message_content_header_left').get().forEach(function(val) {
         if (val.children[0].innerText == target_user) {
             user_id = val.children[0].getAttribute('data-member-id');
         }
     });
+    localStorage.setItem(target_user, user_id);
     return user_id;
 }
