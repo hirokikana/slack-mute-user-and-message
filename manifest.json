@@ -3,7 +3,7 @@
     "name": "Slack Mute User and Message",
     "short_name": "Slack Mute",
     "description": "",
-    "version" : "0.1.1",
+    "version" : "0.1.2",
     "background": {
         "scripts": ["src/js/localstorage.js"]
     },
