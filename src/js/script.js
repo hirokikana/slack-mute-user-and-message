@@ -1,5 +1,5 @@
 $(function() {
-    $('#msgs_div').on('DOMSubtreeModified propertychange', function () {
+    $('#messages_container').on('DOMSubtreeModified propertychange', function () {
         chrome.runtime.sendMessage({method : "getLocalStorage", key : "mute_word_list"},
                                    function(response) {
                                        $.each(response.data, function() { hide_message(this); });
@@ -11,17 +11,9 @@ $(function() {
     });
 });
 
-function replace_message(target_str, replace_str) {
-    $('.message_body').get().forEach(function(val) {
-        if (val.innerText.indexOf(target_str) > -1) {
-            val.innerText = val.innerText.replace(target_str, replace_str);
-        }
-    });
-}
-
 function hide_message(target_str) {
-    if (target_str == '') { return false; };
-    $('.message_body').get().forEach(function(val) {
+    if (target_str.trim() == '') { return false; };
+    $('.c-message__content').get().forEach(function(val) {
         if (val.innerText.indexOf(target_str) > -1) {
             val.parentElement.hidden = true;
         }
@@ -29,31 +21,10 @@ function hide_message(target_str) {
 }
 
 function hide_user(target_user) {
-    if (hide_user == '') { return false; };
-    var user_id = find_user_id(target_user);
-    $('.message_body').get().forEach(function(val) {
-        if (val.parentElement.parentElement.getAttribute('data-member-id') == user_id) {
-            val.parentElement.hidden = true;
+    if (target_user.trim() == '') { return false; };
+    $('.c-message__sender').get().forEach(function(val) {
+        if (val.children[0].innerText.trim() == target_user) {
+            $(val).parents('.c-message__content')[0].parentElement.hidden = true;
         }
     });
-
-    $('.message_gutter').get().forEach(function(val) {
-        if (val.children[0].children[0].getAttribute('data-member-id') == user_id) {
-            val.hidden = true;
-        }
-    });
-}
-
-function find_user_id(target_user) {
-    var user_id;
-    if (localStorage.getItem(target_user)) {
-        return localStorage.getItem(target_user);
-    }
-    $('.message_content_header_left').get().forEach(function(val) {
-        if (val.children[0].innerText == target_user) {
-            user_id = val.children[0].getAttribute('data-member-id');
-        }
-    });
-    localStorage.setItem(target_user, user_id);
-    return user_id;
 }
